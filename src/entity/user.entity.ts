@@ -11,21 +11,21 @@ export class UserEntity extends BaseEntity {
 
     @Column({
         type: "varchar",
-        length: 50,
+        length: 40,
         unique: true
     })
     login!: string
 
     @Column({
         type: "varchar",
-        length: 150,
+        length: 100,
         unique: true
     })
     password!: string
 
     @Column({
         type: "varchar",
-        length: 150
+        length: 100
     })
     remeber_token!: string
 

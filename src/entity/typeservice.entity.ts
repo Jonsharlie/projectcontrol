@@ -1,9 +1,9 @@
 import { BaseEntity } from "../config/base.entity"
 import { Column, Entity, OneToMany } from "typeorm"
-import { UserEntity } from "./user.entity"
+import { ProjectEntity } from "./project.entity"
 
-@Entity({name: "userprofile"})
-export class UserProfileEntity extends BaseEntity {
+@Entity({name: "typeservice"})
+export class TypeServiceEntity extends BaseEntity {
     @Column({
         type: "varchar",
         length: 50,
@@ -16,6 +16,6 @@ export class UserProfileEntity extends BaseEntity {
     })
     state!: boolean
 
-    @OneToMany(() => UserEntity, (users) => users.userprofile)
-    users!: UserEntity[]
+    @OneToMany(() => ProjectEntity, (projects) => projects.typeService)
+    projects!: ProjectEntity[]
 }

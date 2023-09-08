@@ -1,6 +1,10 @@
 import { BaseEntity } from "../config/base.entity"
-import { MemberProjectEntity } from "./member-project.entity"
-import { Column, CreateDateColumn, Entity, OneToMany } from "typeorm"
+import { CustomerEntity } from "./customer.entity"
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from "typeorm"
+import { TypeServiceEntity } from "./typeservice.entity"
+import { ProjectStaffEntity } from "./project.staff.entity"
+import { StageEntity } from "./stage.entity"
+import { SpentEntity } from "./spent.entity"
 
 @Entity({name: "project"})
 export class ProjectEntity extends BaseEntity {
@@ -11,6 +15,11 @@ export class ProjectEntity extends BaseEntity {
         unique: true
     })
     name!: string
+
+    @Column({
+        type: "text"
+    })
+    description!: string
 
     @CreateDateColumn()
     startDate!: Date
@@ -31,6 +40,20 @@ export class ProjectEntity extends BaseEntity {
     })
     state!: boolean
 
-    @OneToMany(() => MemberProjectEntity ,(memberProject) => memberProject.project)
-    memberProject!: MemberProjectEntity
+    @ManyToOne(() => CustomerEntity, (customer) => customer.projects)
+    @JoinColumn({name: "id_customer", "referencedColumnName": "id"})
+    customer!: CustomerEntity
+
+    @ManyToOne(() => TypeServiceEntity, (typeService) => typeService.projects)
+    @JoinColumn({name: "id_typeservice", "referencedColumnName": "id"})
+    typeService!: TypeServiceEntity
+
+    @OneToMany(() => ProjectStaffEntity, (projectStaff) => projectStaff.project)
+    staffToProjects!: ProjectStaffEntity[]
+
+    @OneToMany(() => StageEntity, (stage) => stage.project)
+    stages!: StageEntity[]
+
+    @OneToMany(() => SpentEntity, (spent) => spent.project)
+    spents!: SpentEntity[]
 }

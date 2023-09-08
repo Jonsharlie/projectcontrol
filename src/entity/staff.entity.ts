@@ -1,12 +1,14 @@
 import { BaseEntity } from "../config/base.entity"
 import { AreaEntity } from "./area.entity"
 import { ChargeEntity } from "./charge.entity"
-import { MemberTeamEntity } from "./member-team.entity"
-import { MemberProjectEntity } from "./member-project.entity"
-import { Column, Entity, JoinColumn, OneToMany, OneToOne } from "typeorm"
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from "typeorm"
+import { TypeStaffEntity } from "./typestaff.entity"
+import { StaffTeamEntity } from "./staff.team.entity"
+import { ProjectStaffEntity } from "./project.staff.entity"
+import { ActivityEntity } from "./activity.entity"
 
-@Entity({name: "member"})
-export class MemberEntity extends BaseEntity {
+@Entity({name: "staff"})
+export class StaffEntity extends BaseEntity {
     @OneToOne(() => AreaEntity, {
         eager: true,
         cascade: true
@@ -56,9 +58,16 @@ export class MemberEntity extends BaseEntity {
     })
     state!: boolean
 
-    @OneToMany(() => MemberTeamEntity, (memberTeam) => memberTeam.member)
-    memberTeam!: MemberTeamEntity
+    @ManyToOne(() => TypeStaffEntity, (typeStaff) => typeStaff.staffs)
+    @JoinColumn({name: "id_typestaff", "referencedColumnName": "id"})
+    typeStaff!: TypeStaffEntity
 
-    @OneToMany(() => MemberProjectEntity, (memberProject) => memberProject.member)
-    memberProject!: MemberProjectEntity
+    @OneToMany(() => StaffTeamEntity, (staffTeam) => staffTeam.staff)
+    staffToTeams!: StaffTeamEntity[]
+
+    @OneToMany(() => ProjectStaffEntity, (projectStaff) => projectStaff.staff)
+    staffToProjects!: ProjectStaffEntity[]
+
+    @OneToMany(() => ActivityEntity, (activity) => activity.staff)
+    activities!: ActivityEntity[]
 }
