@@ -13,12 +13,22 @@ export class AreaService extends ConfigServer {
         } else {
             getConn = await this.initConnect
         }
-        const data = await getConn.getRepository(AreaEntity).find()
+        const data = await getConn.getRepository(AreaEntity).find({
+            select: {
+                id: true,
+                name: true,
+                state: true
+            },
+            order: {
+                name: "ASC"
+            }
+        })
         return data
     }
 
     async findAreaById(req: Request): Promise<AreaEntity | null> {
-        const {id} = req.params
+        const {id_area} = req.body
+        const id = this.getStringToValue(id_area)
         const isInitialized: boolean = AppDataSource.isInitialized
         let getConn: DataSource
         if (isInitialized) {
@@ -67,5 +77,9 @@ export class AreaService extends ConfigServer {
             getConn = await this.initConnect
         }
         return await getConn.getRepository(AreaEntity).update(id, req.body)
+    }
+
+    getStringToValue(value: any): string {
+        return value.toString()
     }
 }

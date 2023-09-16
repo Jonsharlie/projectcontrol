@@ -6,6 +6,7 @@ import { TypeStaffEntity } from "./typestaff.entity"
 import { StaffTeamEntity } from "./staff.team.entity"
 import { ProjectStaffEntity } from "./project.staff.entity"
 import { ActivityEntity } from "./activity.entity"
+import { TypeDocumentEntity } from "./typedocument.entity"
 
 @Entity({name: "staff"})
 export class StaffEntity extends BaseEntity {
@@ -22,12 +23,6 @@ export class StaffEntity extends BaseEntity {
     })
     @JoinColumn({name: "id_charge"})
     charge!: ChargeEntity
-
-    @Column({
-        type: "varchar",
-        length: 50
-    })
-    name!: string
 
     @Column({
         type: "varchar",
@@ -54,6 +49,12 @@ export class StaffEntity extends BaseEntity {
     phone!: string
 
     @Column({
+        type: "varchar",
+        length: 13
+    })
+    documentNumber!: string
+
+    @Column({
         default: true
     })
     state!: boolean
@@ -70,4 +71,8 @@ export class StaffEntity extends BaseEntity {
 
     @OneToMany(() => ActivityEntity, (activity) => activity.staff)
     activities!: ActivityEntity[]
+
+    @ManyToOne(() => TypeDocumentEntity, (typeDocument) => typeDocument.staffs)
+    @JoinColumn({name: "id_typedocument", "referencedColumnName": "id"})
+    typeDocument!: TypeDocumentEntity
 }

@@ -2,6 +2,7 @@ import { BaseEntity } from "../config/base.entity"
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne } from "typeorm"
 import { RequirementEntity } from "./requirement.entity"
 import { StaffEntity } from "./staff.entity"
+import { StatusActivityEntity } from "./statusactivity.entity"
 
 @Entity({name: "activity"})
 export class ActivityEntity extends BaseEntity {
@@ -30,4 +31,8 @@ export class ActivityEntity extends BaseEntity {
     @ManyToOne(() => StaffEntity, (staff) => staff.activities)
     @JoinColumn({name: "id_staff", "referencedColumnName": "id"})
     staff!: StaffEntity
+
+    @ManyToOne(() => StatusActivityEntity, (statusActivity) => statusActivity.activities)
+    @JoinColumn({name: "id_statusactivity", "referencedColumnName": "id"})
+    statusActivity!: StatusActivityEntity
 } 

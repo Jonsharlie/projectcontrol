@@ -18,7 +18,6 @@ export class UserProfileService extends ConfigServer {
     }
 
     async findUserProfileById(id: string): Promise<UserProfileEntity | null> {
-        // const {id} = req.params
         const isInitialized: boolean = AppDataSource.isInitialized
         let getConn: DataSource
         if (isInitialized) {

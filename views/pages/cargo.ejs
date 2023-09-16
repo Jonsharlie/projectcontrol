@@ -1,0 +1,115 @@
+<div class="breadcrumbs">
+    <div class="breadcrumbs-inner">
+        <div class="row m-0">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Cargo</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="page-header float-right">
+                    <div class="page-title">
+                        <ol class="breadcrumb text-right">
+                            <li><a href="/">Dashboard</a></li>
+                            <li class="active">Cargo</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Content -->
+<div class="content">
+    <!-- Animated -->
+    <div class="animated fadeIn">
+        <!-- Widgets  -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row m-0">
+                            <div class="col-sm-9">
+                                <strong class="card-title">Listado de cargos</strong>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="float-right">
+                                    <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modal-form-cargo">Nuevo Cargo</button>
+                                    <button type="button" class="btn btn-outline-secondary btn-sm" id="btnListCargo">Listado</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="listCargo">
+                            <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Estado</th>
+                                        <th>Opciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% if (charges.status == 404) { %>
+                                    <tr>
+                                        <td colspan="3">No se encontraron registros</td>
+                                    </tr>
+                                    <% } else { %>
+                                        <% charges.data.forEach(function(charge) { %>
+                                            <tr>
+                                                <td><%= charge.name %></td>
+                                                <td>
+                                                    <% if (charge.state) { %>
+                                                        <i class="fa fa-check"></i>
+                                                    <% } else { %>
+                                                        <i class="tim-icons icon-simple-remove"></i>
+                                                    <% } %>
+                                                </td>
+                                                <td>
+                                                    <a href="javascript:void(0)" class="editCargo" data-id="<%= charge.id %>"><i class="fa fa-pencil"></i></a>
+                                                    <a href="javascript:void(0)" class="deleteCargo" data-id="<%= charge.id %>"><i class="fa fa-trash-o"></i></a>
+                                                </td>
+                                            </tr>
+                                        <% }) %>
+                                    <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Widgets -->
+        <div class="modal fade" id="modal-form-cargo" tabindex="-1" role="dialog" aria-labelledby="modal-cargo" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal-cargo">Nuevo cargo</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <i class="tim-icons icon-simple-remove"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="formCargo">
+                            <input type="hidden" name="idCargo" id="idCargo"/>
+                            <div class="form-group">
+                                <label for="nombreCargo">Nombre de cargo</label>
+                                <input type="text" id="nombreCargo" placeholder="Jefe de proyectos" class="form-control form-control-sm">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" id="guardarCargo">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!-- /#add-category -->
+    </div>
+    <!-- .animated -->
+</div>
+<!-- /.content -->

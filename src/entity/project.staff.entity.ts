@@ -1,11 +1,15 @@
 import { BaseEntity } from '../config/base.entity'
-import { CustomerEntity } from './customer.entity'
 import { ProjectEntity } from './project.entity'
 import { StaffEntity } from './staff.entity'
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne } from "typeorm"
 
 @Entity({name: "project_staff"})
 export class ProjectStaffEntity extends BaseEntity {
+    @Column({
+        default: false
+    })
+    leader!: boolean
+
     @CreateDateColumn()
     registerDate!: Date
 

@@ -1,0 +1,149 @@
+<div class="breadcrumbs">
+    <div class="breadcrumbs-inner">
+        <div class="row m-0">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Tipo de documento</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="page-header float-right">
+                    <div class="page-title">
+                        <ol class="breadcrumb text-right">
+                            <li><a href="/">Dashboard</a></li>
+                            <li class="active">Tipo de documento</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Content -->
+<div class="content">
+    <!-- Animated -->
+    <div class="animated fadeIn">
+        <!-- Widgets  -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row m-0">
+                            <div class="col-sm-8">
+                                <strong class="card-title">Listado de tipos de documento</strong>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="float-right">
+                                    <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modal-form-tipodocumento">Nuevo Tipo de documento</button>
+                                    <button type="button" class="btn btn-outline-secondary btn-sm" id="btnListTipoDocumento">Listado</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="listTipoDocumento">
+                            <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Abreviatura</th>
+                                        <th>Longitud</th>
+                                        <th>Estado</th>
+                                        <th>Opciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% if (typeDocuments.status == 404) { %>
+                                    <tr>
+                                        <td colspan="5">No se encontraron registros</td>
+                                    </tr>
+                                    <% } else { %>
+                                        <% typeDocuments.data.forEach(function(typeDocument) { %>
+                                            <tr>
+                                                <td><%= typeDocument.name %></td>
+                                                <td><%= typeDocument.abbreviation %></td>
+                                                <td><%= typeDocument.length %></td>
+                                                <td>
+                                                    <% if (typeDocument.state) { %>
+                                                        <i class="fa fa-check"></i>
+                                                    <% } else { %>
+                                                        <i class="tim-icons icon-simple-remove"></i>
+                                                    <% } %>
+                                                </td>
+                                                <td>
+                                                    <a href="javascript:void(0)" class="editTipoDocumento" data-id="<%= typeDocument.id %>"><i class="fa fa-pencil"></i></a>
+                                                    <a href="javascript:void(0)" class="deleteTipoDocumento" data-id="<%= typeDocument.id %>"><i class="fa fa-trash-o"></i></a>
+                                                </td>
+                                            </tr>
+                                        <% }) %>
+                                    <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Widgets -->
+        <div class="modal fade" id="modal-form-tipodocumento" tabindex="-1" role="dialog" aria-labelledby="modal-tipodocumento" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal-tipodocumento">Nuevo tipo de documento</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <i class="tim-icons icon-simple-remove"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="formTipoDocumento">
+                            <input type="hidden" name="idTipoDocumento" id="idTipoDocumento"/>
+                            <div class="form-group">
+                                <label for="nombreTipoDocumento" class="form-control-label">Nombre de tipo de documento</label>
+                                <input type="text" id="nombreTipoDocumento" placeholder="Documento Nacional de Identidad" class="form-control form-control-sm">
+                            </div>
+                            <div class="form-group">
+                                <label for="abreviatura" class="form-control-label">Abreviatura</label>
+                                <input type="text" id="abreviatura" placeholder="DNI" class="form-control form-control-sm">
+                            </div>
+                            <div class="form-group">
+                                <label for="longitudTipoDocumento" class="form-control-label">Longitud</label>
+                                <input type="text" id="longitudTipoDocumento" placeholder="8" class="form-control form-control-sm">
+                            </div>
+                            <div class="form-group">
+                                <div class="form-check-inline form-check">
+                                    <label for="chkPersonaNatural_yes" class="form-control-label">Persona Natural</label>
+                                    <label for="chkPersonaNatural_yes" class="form-check-label ">
+                                        <input type="radio" id="chkPersonaNatural_yes" name="chkPersonaNatural" value="1" class="form-check-input">SI
+                                    </label>
+                                    <label for="chkPersonaNatural_no" class="form-check-label ">
+                                        <input type="radio" id="chkPersonaNatural_no" name="chkPersonaNatural" value="0" class="form-check-input">NO
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-check-inline form-check">
+                                    <label for="chkPersonaJuridica_yes" class="form-control-label">Persona Jurídica</label>
+                                    <label for="chkPersonaJuridica_yes" class="form-check-label ">
+                                        <input type="radio" id="chkPersonaJuridica_yes" name="chkPersonaJuridica" value="1" class="form-check-input">SI
+                                    </label>
+                                    <label for="chkPersonaJuridica_no" class="form-check-label ">
+                                        <input type="radio" id="chkPersonaJuridica_no" name="chkPersonaJuridica" value="0" class="form-check-input">NO
+                                    </label>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" id="guardarTipoDocumento">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!-- /#add-category -->
+    </div>
+    <!-- .animated -->
+</div>
+<!-- /.content -->
